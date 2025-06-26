@@ -1,6 +1,6 @@
 # use groq with llama3-70b-8192
 import logging
-from groq import GroqClient
+from groq import Groq
 
 # initialize logging
 logger = logging.getLogger(__name__)
@@ -9,7 +9,7 @@ class LLMClient:
     def __init__(self, api_key: str, model: str = "llama3-70b-8192"):
         self.api_key = api_key
         self.model = model
-        self.client = GroqClient(api_key=api_key)
+        self.client = Groq(api_key=api_key)
         logger.info(f"initialized LLMClient with model: {self.model}")
 
 
@@ -21,7 +21,7 @@ class LLMClient:
             model = self.model,
             messages = [{"role": "user", "content": prompt}],
             max_tokens = max_tokens,
-            tempreature = temperature
+            temperature = temperature
         )
 
         logger.info(f"Response generated: {response.choices[0].message.content}")
