@@ -1,13 +1,20 @@
 import sentence_transformers as st
 import logging
+import os 
+import dotenv
+from app.llm.llm_client import LLMClient
+from app.llm.prompts import TOPIC_CLASSIFICATION_PROMPT
+
+# load environment variables
+dotenv.load_dotenv()
 
 # Initialize logging
 logger = logging.getLogger(__name__)
 
-
 class TaskPlanner:
     def __init__(self, model: str = "all-MiniLM-L6-v2"):
         self.model = st.SentenceTransformer(model)
+        self.llm_client = LLMClient(api_key=os.getenv("GROQ_API_KEY"))
         self.task_descriptions = {
             "find_papers": "search for research papers, academic articles, studies",
             "find_datasets": "search for datasets, data collections, corpora",
@@ -44,4 +51,9 @@ class TaskPlanner:
 
     # get topic matching the query using LLM
     def get_topic(self, query: str) -> str:
-        pass
+        # query the LLM to get the topic
+        prompt = TOPIC_CLASSIFICATION_PROMPT.format(query=query)
+        logger.info(f"retrieving topic for query: {query}")
+        response = self.llm_client.generate_response(prompt, max_tokens=100)
+        logger.info(f"topic: {response}")
+        return response
