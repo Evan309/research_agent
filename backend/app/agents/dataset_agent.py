@@ -10,7 +10,7 @@ class DatasetAgent:
         self.kaggle_api.authenticate()
 
     def search_kaggle_datasets(self, topic: str) -> list[dict]:
-        results = self.kaggle_api.datasets.search_datasets(query=topic)
+        results = self.kaggle_api.dataset_list(search=topic)
         return results
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:

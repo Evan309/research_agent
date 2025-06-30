@@ -13,7 +13,7 @@ class TestDatasetAgent(unittest.TestCase):
         self.task_planner = TaskPlanner()
 
     def test_search_kaggle_datasets(self):
-        query = "I want to find research papers on machine learning"
+        query = "I want to find datasets on credit score classification"
         topic = self.task_planner.get_topic(query)
         logger.info(f"topic: {topic}")
         logger.info(f"searching for datasets on kaggle")
