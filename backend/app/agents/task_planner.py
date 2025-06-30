@@ -2,8 +2,8 @@ import sentence_transformers as st
 import logging
 import os 
 import dotenv
-from app.llm.llm_client import LLMClient
-from app.llm.prompts import TOPIC_CLASSIFICATION_PROMPT
+from backend.app.core.llm_client import LLMClient
+from backend.app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
 
 # load environment variables
 dotenv.load_dotenv()

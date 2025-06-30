@@ -1,5 +1,5 @@
 import unittest
-import app.llm.llm_client as llm_client
+import backend.app.core.llm_client as llm_client
 import os
 import logging
 from dotenv import load_dotenv

@@ -9,13 +9,15 @@ class DatasetAgent:
         self.kaggle_api = KaggleApi()
         self.kaggle_api.authenticate()
 
+    # get kaggle datasets relevant to topic
     def search_kaggle_datasets(self, topic: str) -> list[dict]:
-        results = self.kaggle_api.dataset_list(search=topic)
+        results = self.kaggle_api.dataset_list(search=topic, sort_by="hottest")
         return results
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
     
+    # sort kaggle datasets by similiarity between title/subtitle and query using embeddings 
     def get_relevant_datasets(self, datasets: list[dict]):
         pass
     
