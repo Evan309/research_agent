@@ -22,10 +22,10 @@ class TestDatasetAgent(unittest.TestCase):
         logger.info(f"results: {results}")
 
     def test_get_kaggle_dataset_info(self):
-        dataset_id = 5660999
-        logger.info(f"getting dataset info for dataset id: {dataset_id}")
-        results = self.dataset_agent.get_kaggle_dataset_info(dataset_id)
-        logger.info(f"info for dataset {dataset_id}: {results}")
+        dataset_ref = "parisrohan/credit-score-classification"
+        logger.info(f"getting dataset info for dataset id: {dataset_ref}")
+        results = self.dataset_agent.get_kaggle_dataset_info(dataset_ref)
+        logger.info(f"info for dataset {dataset_ref}: {results}")
         
 
 if __name__ == "__main__":
