@@ -1,4 +1,3 @@
-import sentence_transformers as st
 import logging
 import os 
 import dotenv
@@ -12,8 +11,8 @@ dotenv.load_dotenv()
 logger = logging.getLogger(__name__)
 
 class TaskPlanner:
-    def __init__(self, model: str = "all-MiniLM-L6-v2"):
-        self.model = st.SentenceTransformer(model)
+    def __init__(self, embedder):
+        self.embedder = embedder
         self.llm_client = LLMClient(api_key=os.getenv("GROQ_API_KEY"))
         self.task_descriptions = {
             "find_papers": "search for research papers, academic articles, studies",
@@ -26,17 +25,17 @@ class TaskPlanner:
 
         # encode the query using the sentence transformer model
         logger.info(f"Encoding query: {query}")
-        query_emb = self.model.encode(query, convert_to_tensor=True)
+        query_emb = self.embedder.encode(query, convert_to_tensor=True)
         subtasks = []
 
         for task, description in self.task_descriptions.items():
             # encode task description
             logger.info(f"Encoding task description: {description}")
-            task_emb = self.model.encode(description, convert_to_tensor=True)
+            task_emb = self.embedder.encode(description, convert_to_tensor=True)
 
             # calculate similarity
             logger.info(f"Calculating similarity between query and task: {task}")
-            similarity = st.util.pytorch_cos_sim(query_emb, task_emb)
+            similarity = self.embedder.similarity(query_emb, task_emb)
             logger.info(f"Similarity for task: {similarity.item()}")
 
             if similarity.item() > 0.5:
