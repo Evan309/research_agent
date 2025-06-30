@@ -3,7 +3,10 @@ class DatasetAgent:
     def __init__(self):
         pass
 
-    def search_datasets(self, topic: str) -> list[dict]:
+    def search_kaggle_datasets(self, topic: str) -> list[dict]:
+        pass
+
+    def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
     
     def get_dataset_info(self, dataset_id: str):
