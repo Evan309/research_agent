@@ -16,8 +16,16 @@ class DatasetAgent:
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
     
-    def get_dataset_info(self, dataset_id: str):
-        pass
+    def get_kaggle_dataset_info(self, dataset_id: str):
+        dataset = self.kaggle_api.dataset_view(dataset_id)
+        return {
+            "title": dataset.title,
+            "description": dataset.description,
+            "url": dataset.url,
+            "size": dataset.size,
+            "num_rows": dataset.num_rows,
+            "num_columns": dataset.num_columns,
+        }
     
     def get_dataset_files(self, dataset_id: str):
         pass
