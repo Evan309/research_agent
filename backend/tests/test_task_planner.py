@@ -1,14 +1,18 @@
 import unittest
 import logging
 from app.agents.task_planner import TaskPlanner
+from app.core.embedding_client import EmbeddingClient
 
 # initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+#initialize embedder
+embedder = EmbeddingClient()
+
 class TestTaskPlanner(unittest.TestCase):
     def setUp(self):
-        self.task_planner = TaskPlanner()
+        self.task_planner = TaskPlanner(embedder)
 
     def test_get_subtasks(self):
         logger.info("testing get_subtasks")

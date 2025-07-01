@@ -1,8 +1,8 @@
 import logging
 import os 
 import dotenv
-from backend.app.core.llm_client import LLMClient
-from backend.app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
+from app.core.llm_client import LLMClient
+from app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
 
 # load environment variables
 dotenv.load_dotenv()
@@ -25,18 +25,17 @@ class TaskPlanner:
 
         # encode the query using the sentence transformer model
         logger.info(f"Encoding query: {query}")
-        query_emb = self.embedder.encode(query, convert_to_tensor=True)
+        query_emb = self.embedder.encode(query, True)
         subtasks = []
 
         for task, description in self.task_descriptions.items():
             # encode task description
             logger.info(f"Encoding task description: {description}")
-            task_emb = self.embedder.encode(description, convert_to_tensor=True)
+            task_emb = self.embedder.encode(description, True)
 
             # calculate similarity
             logger.info(f"Calculating similarity between query and task: {task}")
             similarity = self.embedder.similarity(query_emb, task_emb)
-            logger.info(f"Similarity for task: {similarity.item()}")
 
             if similarity.item() > 0.5:
                 subtasks.append(task)

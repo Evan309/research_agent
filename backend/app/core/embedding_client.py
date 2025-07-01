@@ -15,7 +15,7 @@ class EmbeddingClient:
         return self.model.encode(text, convert_to_tensor=to_tensor)
     
     def similarity(self, emb_one, emb_two) -> torch.Tensor:
-        logger.info(f"retrieving cos_sim between {emb_one} and {emb_two}")
+        logger.info("retrieving cos_sim between first embedding and second embedding")
         similarity = st.util.cos_sim(emb_one, emb_two)
-        logger.info(f"similarity between {emb_one} and {emb_two}: {similarity.item()}")
+        logger.info(f"similarity between first embedding and second embedding: {similarity.item()}")
         return similarity
