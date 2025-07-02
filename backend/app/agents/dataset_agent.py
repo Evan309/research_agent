@@ -17,8 +17,12 @@ class DatasetAgent:
         results = self.kaggle_api.dataset_list(search=topic, sort_by="hottest")
         logger.info(f"found {len(results)} datasets")
 
+        # parse kaggle datasets
+        parsed_datasets = [self.parse_kaggle_dataset(dataset) for dataset in results]
+        logger.info(f"parsed {len(parsed_datasets)} datasets")
+
         # get relevant datasets
-        relevant_datasets = self.get_relevant_kaggle_datasets(topic, results)
+        relevant_datasets = self.get_relevant_kaggle_datasets(topic, parsed_datasets)
         logger.info(f"found {len(relevant_datasets)} relevant datasets")
 
         # return relevant datasets
@@ -38,14 +42,15 @@ class DatasetAgent:
 
         logger.info(f"getting relevant datasets for topic: {topic}")
         for dataset in datasets:
-            title_embedding = self.embedder.encode(dataset.title)
-            subtitle_embedding = self.embedder.encode(dataset.subtitle)
-            description_embedding = self.embedder.encode(dataset.description)
+            title_embedding = self.embedder.encode(dataset["title"])
+            subtitle_embedding = self.embedder.encode(dataset["subtitle"])
+            description_embedding = self.embedder.encode(dataset["description"])
 
             title_similarity = self.embedder.similarity(title_embedding, topic_embedding)
             subtitle_similarity = self.embedder.similarity(subtitle_embedding, topic_embedding)
             description_similarity = self.embedder.similarity(description_embedding, topic_embedding)
-            similarity_score = (title_similarity + subtitle_similarity + description_similarity) / 3
+            relevant_factors = title_similarity + subtitle_similarity + description_similarity + dataset["download_count"] + dataset["usability_rating"]
+            similarity_score = relevant_factors / 5
             dataset["similarity_score"] = similarity_score
             filtered_datasets.append(dataset)
 
@@ -56,6 +61,21 @@ class DatasetAgent:
     
     def get_huggingface_dataset_info(self, dataset_id: str):
         pass
+
+    # parse kaggle dataset object to dict
+    def parse_kaggle_dataset(self, dataset: dict) -> dict:
+        logger.info(f"parsing kaggle dataset: {dataset.title}")
+        dataset_info = {
+            "title": dataset.title,
+            "subtitle": dataset.subtitle,
+            "description": dataset.description,
+            "url": dataset.url,
+            "download_count": dataset.downloadCount,
+            "usability_rating": dataset.usabilityRating,
+        }
+        logger.info(f"parsed kaggle dataset: {dataset_info}")
+        return dataset_info
     
+
     def get_dataset_files(self, dataset_id: str):
         pass
