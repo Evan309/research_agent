@@ -13,7 +13,7 @@ embedder = EmbeddingClient()
 
 class TestDatasetAgent(unittest.TestCase):
     def setUp(self):
-        self.dataset_agent = DatasetAgent()
+        self.dataset_agent = DatasetAgent(embedder)
         self.task_planner = TaskPlanner(embedder)
 
     def test_search_kaggle_datasets(self):
@@ -24,12 +24,6 @@ class TestDatasetAgent(unittest.TestCase):
         results = self.dataset_agent.search_kaggle_datasets(topic)
         logger.info(f"found {len(results)} datasets")
         logger.info(f"results: {results}")
-
-    def test_get_kaggle_dataset_info(self):
-        dataset_ref = "parisrohan/credit-score-classification"
-        logger.info(f"getting dataset info for dataset id: {dataset_ref}")
-        results = self.dataset_agent.get_kaggle_dataset_info(dataset_ref)
-        logger.info(f"info for dataset {dataset_ref}: {results}")
         
 
 if __name__ == "__main__":
