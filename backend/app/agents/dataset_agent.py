@@ -11,15 +11,27 @@ class DatasetAgent:
         self.embedder = embedder
 
     # get kaggle datasets relevant to topic
-    def search_kaggle_datasets(self, topic: str) -> list[dict]:
+    def search_kaggle_datasets(self, topic: str, num_datasets: int = 10) -> list[dict]:
+        # search kaggle datasets for topic
+        logger.info(f"searching kaggle datasets for topic: {topic}")
         results = self.kaggle_api.dataset_list(search=topic, sort_by="hottest")
-        return results
+        logger.info(f"found {len(results)} datasets")
+
+        # get relevant datasets
+        relevant_datasets = self.get_relevant_kaggle_datasets(topic, results)
+        logger.info(f"found {len(relevant_datasets)} relevant datasets")
+
+        # return relevant datasets
+        if num_datasets > len(relevant_datasets):
+            return relevant_datasets
+        else:
+            return relevant_datasets[:num_datasets]
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
     
     # sort kaggle datasets by similiarity between title/subtitle and query using embeddings 
-    def get_relevant_datasets(self, topic: str, datasets: list[dict]) -> list[dict]:
+    def get_relevant_kaggle_datasets(self, topic: str, datasets: list[dict]) -> list[dict]:
         filtered_datasets = []
         topic_embedding = self.embedder.encode(topic)
 
@@ -39,8 +51,6 @@ class DatasetAgent:
         # sort datasets by similarity score
         filtered_datasets.sort(key=lambda x: x["similarity_score"], reverse=True)
         return filtered_datasets
-
-
 
     
     def get_huggingface_dataset_info(self, dataset_id: str):
