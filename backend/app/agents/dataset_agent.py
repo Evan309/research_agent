@@ -22,6 +22,7 @@ class DatasetAgent:
         logger.info(f"found {len(relevant_datasets)} relevant datasets")
 
         # return relevant datasets
+        logger.info(f"returning {num_datasets} relevant datasets")
         if num_datasets > len(relevant_datasets):
             return relevant_datasets
         else:
@@ -37,9 +38,9 @@ class DatasetAgent:
 
         logger.info(f"getting relevant datasets for topic: {topic}")
         for dataset in datasets:
-            title_embedding = self.embedder.encode(dataset["title"])
-            subtitle_embedding = self.embedder.encode(dataset["subtitle"])
-            description_embedding = self.embedder.encode(dataset["description"])
+            title_embedding = self.embedder.encode(dataset.title)
+            subtitle_embedding = self.embedder.encode(dataset.subtitle)
+            description_embedding = self.embedder.encode(dataset.description)
 
             title_similarity = self.embedder.similarity(title_embedding, topic_embedding)
             subtitle_similarity = self.embedder.similarity(subtitle_embedding, topic_embedding)
