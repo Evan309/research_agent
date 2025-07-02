@@ -46,10 +46,17 @@ class DatasetAgent:
             subtitle_embedding = self.embedder.encode(dataset["subtitle"])
             description_embedding = self.embedder.encode(dataset["description"])
 
+            # calculate similarity between dataset and topic
+            logger.info(f"calculating similarity between dataset: {dataset['title']} and topic: {topic}")
             title_similarity = self.embedder.similarity(title_embedding, topic_embedding)
+            logger.info(f"calculating similarity between subtitle: {dataset['subtitle']} and topic: {topic}")
             subtitle_similarity = self.embedder.similarity(subtitle_embedding, topic_embedding)
+            logger.info(f"calculating similarity between description: {dataset['description']} and topic: {topic}")
             description_similarity = self.embedder.similarity(description_embedding, topic_embedding)
-            relevant_factors = title_similarity + subtitle_similarity + description_similarity + dataset["download_count"] + dataset["usability_rating"]
+
+            # calculate similarity score
+            logger.info(f"calculating similarity score for dataset: {dataset['title']}")
+            relevant_factors = title_similarity.item() + subtitle_similarity.item() + description_similarity.item() + dataset["download_count"] + dataset["usability_rating"]
             similarity_score = relevant_factors / 5
             dataset["similarity_score"] = similarity_score
             filtered_datasets.append(dataset)
@@ -70,8 +77,8 @@ class DatasetAgent:
             "subtitle": dataset.subtitle,
             "description": dataset.description,
             "url": dataset.url,
-            "download_count": dataset.downloadCount,
-            "usability_rating": dataset.usabilityRating,
+            "download_count": dataset.download_count,
+            "usability_rating": dataset.usability_rating,
         }
         logger.info(f"parsed kaggle dataset: {dataset_info}")
         return dataset_info
