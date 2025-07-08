@@ -12,4 +12,7 @@ class NewsAgent:
     def search_news(self, topic: str):
         pass
 
+    def summarize_news_article(self, article_url: str):
+        pass
+
 
