@@ -16,8 +16,9 @@ class NewsAgent:
         self.embedder = embedder
         self.GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 
-
     def search_news(self, topic: str, max: int = 10, sortby: str = "publishedAt"):
+        logger.info(f"searching nes with topic: {topic}")
+        
         pass
 
     def summarize_news_article(self, article_url: str):
