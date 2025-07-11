@@ -1,19 +1,13 @@
 import logging
-import os 
-import dotenv
-from app.core.llm_client import LLMClient
 from app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
-
-# load environment variables
-dotenv.load_dotenv()
 
 # Initialize logging
 logger = logging.getLogger(__name__)
 
 class TaskPlanner:
-    def __init__(self, embedder):
+    def __init__(self, embedder, LLM_client):
         self.embedder = embedder
-        self.llm_client = LLMClient(api_key=os.getenv("GROQ_API_KEY"))
+        self.llm_client = LLM_client
         self.task_descriptions = {
             "find_papers": "search for research papers, academic articles, studies",
             "find_datasets": "search for datasets, data collections, corpora",

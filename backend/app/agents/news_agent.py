@@ -12,9 +12,12 @@ load_dotenv()
 
 
 class NewsAgent:
-    def __init__(self, embedder):
+    def __init__(self, embedder, web_scraper, LLM_client):
         self.embedder = embedder
         self.GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
+        self.web_scraper = web_scraper
+        self.llm_client = LLM_client
+
 
     # search news with GNEWS api
     def search_GNEWS(self, topic: str, max_results: int = 10, sortby: str = "publishedAt") -> list[dict]:
@@ -37,4 +40,12 @@ class NewsAgent:
 
     # summarize news articles by scraping article urls
     def summarize_news_article(self, article_url: str):
-        pass
+        logger.info(f"summarizing article url: {article_url}")
+
+        # scrape article url for main content
+        scraped_results = self.web_scraper.scrape_article_url(article_url)
+
+        # summarize content with LLM
+
+
+
