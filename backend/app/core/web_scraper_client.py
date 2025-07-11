@@ -3,7 +3,6 @@ import requests
 from readability import Document
 from bs4 import BeautifulSoup
 
-
 # initialize logging
 logger = logging.getLogger(__name__)
 
@@ -14,6 +13,7 @@ class WebScraperClient:
     # scrapes main content of the article url for llm to summarize
     def scrape_article_url(self, url: str) -> str:
         try: 
+            logger.info(f"trying to scrape url: {url}")
             response = requests.get(url, headers=self.headers, timeout=10)
             response.raise_for_status()
 
@@ -38,3 +38,4 @@ class WebScraperClient:
                 "url": url,
                 "error": str(e)
             } 
+        
