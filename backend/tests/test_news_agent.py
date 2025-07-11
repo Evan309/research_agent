@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 embedder = EmbeddingClient()
 
 class TestNewsAgent(unittest.TestCase):
-    def setup(self):
+    def setUp(self):
         self.news_agent = NewsAgent(embedder)
         self.task_planner = TaskPlanner(embedder)
 
@@ -23,3 +23,7 @@ class TestNewsAgent(unittest.TestCase):
         logger.info(f"searching GNEWS")
         results = self.news_agent.search_news(topic=topic)
         logger.info(f"results: {results}")
+
+
+if __name__ == "__main__":
+    unittest.main()
