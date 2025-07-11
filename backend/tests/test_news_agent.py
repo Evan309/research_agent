@@ -17,7 +17,7 @@ class TestNewsAgent(unittest.TestCase):
         self.task_planner = TaskPlanner(embedder)
 
     def test_search_GNEWS(self):
-        query = "I want recent news about amazon"
+        query = "I want recent news about XRP"
         topic = self.task_planner.get_topic(query)
         logger.info(f"topic{topic}")
         logger.info(f"searching GNEWS")
