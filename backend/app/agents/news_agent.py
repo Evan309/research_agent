@@ -32,7 +32,8 @@ class NewsAgent:
         # return list of articles
         data = response.json()
         logger.info(f"number of articles found: {data["totalArticles"]}")
-        return data["articles"]
+        results = data["articles"]
+        return results
 
     # summarize news articles by scraping article urls
     def summarize_news_article(self, article_url: str):
