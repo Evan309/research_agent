@@ -18,7 +18,6 @@ class NewsAgent:
         self.web_scraper = web_scraper
         self.llm_client = LLM_client
 
-
     # search news with GNEWS api
     def search_GNEWS(self, topic: str, max_results: int = 10, sortby: str = "publishedAt") -> list[dict]:
         search_url = f"https://gnews.io/api/v4/search"
