@@ -25,13 +25,13 @@ class NewsAgent:
             "max": max_results,
             "sortby": sortby
         }
-        logger.info(f"searching nes with topic: {topic}")
+        logger.info(f"searching news with topic: {topic}")
 
         response = requests.get(search_url, params)
 
         # return list of articles
         data = response.json()
-        logger.info(f"numver of articles found: {data["totalArticles"]}")
+        logger.info(f"number of articles found: {data["totalArticles"]}")
         return data["articles"]
 
     # summarize news articles by scraping article urls
