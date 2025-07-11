@@ -17,7 +17,7 @@ class NewsAgent:
         self.GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 
     # search news with GNEWS api
-    def search_news(self, topic: str, max_results: int = 10, sortby: str = "publishedAt") -> list[dict]:
+    def search_GNEWS(self, topic: str, max_results: int = 10, sortby: str = "publishedAt") -> list[dict]:
         search_url = f"https://gnews.io/api/v4/search"
         params = {
             "q": topic,
@@ -37,5 +37,3 @@ class NewsAgent:
     # summarize news articles by scraping article urls
     def summarize_news_article(self, article_url: str):
         pass
-
-
