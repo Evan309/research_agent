@@ -31,10 +31,11 @@ class TaskPlanner:
             logger.info(f"Calculating similarity between query and task: {task}")
             similarity = self.embedder.similarity(query_emb, task_emb)
 
-            if similarity.item() > 0.5:
+            if similarity.item() > 0.3:
                 subtasks.append(task)
 
         if not subtasks:
+            logger.info("no tasks found adding all tasks")
             subtasks = list(self.task_descriptions.keys())
 
         logger.info(f"Identified subtasks: {subtasks}")
