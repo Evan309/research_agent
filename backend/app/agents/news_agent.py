@@ -45,6 +45,3 @@ class NewsAgent:
         scraped_results = self.web_scraper.scrape_article_url(article_url)
 
         # summarize content with LLM
-
-
-
