@@ -27,10 +27,7 @@ class DatasetAgent:
 
         # return relevant datasets
         logger.info(f"returning {num_datasets} relevant datasets")
-        if num_datasets > len(relevant_datasets):
-            return relevant_datasets
-        else:
-            return relevant_datasets[:num_datasets]
+        return relevant_datasets[:num_datasets]
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
