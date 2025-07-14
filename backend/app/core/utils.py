@@ -5,7 +5,7 @@ from app.core.prompts import ARTICLE_SUMMARIZATION_PROMPT
 tokenizer = AutoTokenizer.from_pretrained("NousResearch/Llama-2-7b-hf")
 
 # splits a long text into chunks of at most "max tokens"
-def chunk_text_by_tokens(text: str, max_tokens: int = 3000) -> list[str]:
+def chunk_text_by_tokens(text: str, max_tokens: int = 2000) -> list[str]:
     tokens = tokenizer.encode(text)
     chunks = []
 
@@ -17,7 +17,7 @@ def chunk_text_by_tokens(text: str, max_tokens: int = 3000) -> list[str]:
     return chunks
 
 # recursively summarize list of chunks
-def summarize_chunks(chunks: list[str], llm: LLMClient, max_tokens: int = 2000, max_depth: int = 3, current_depth: int = 0) -> str:
+def summarize_chunks(chunks: list[str], llm: LLMClient, max_depth: int = 3, current_depth: int = 0) -> str:
     
     if not chunks:
         return ""
@@ -26,4 +26,16 @@ def summarize_chunks(chunks: list[str], llm: LLMClient, max_tokens: int = 2000, 
     summaries = []
     for chunk in chunks:
         prompt = ARTICLE_SUMMARIZATION_PROMPT.format(content=chunk)
-        
+        summary = llm.generate_response(prompt)
+        summaries.append(summary)
+
+    # combine to one summary
+    combined_summary = "\n".join(summaries)
+
+    # base case
+    if len(summaries) == 1 or current_depth >= max_depth:
+        return combined_summary.strip()
+    
+    # recursive call
+    new_chunks = chunk_text_by_tokens(combined_summary)
+    return summarize_chunks(new_chunks, llm, max_depth, current_depth + 1)
