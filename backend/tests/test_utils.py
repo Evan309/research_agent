@@ -24,6 +24,7 @@ class TestUtils(unittest.TestCase):
         
         # chunk content
         chunks = chunk_text_by_tokens(content)
+        logger.info(f"number of chunks: {len(chunks)}")
         logger.info(f"chunks: {chunks}")
 
 
