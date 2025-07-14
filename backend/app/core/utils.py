@@ -26,7 +26,7 @@ def summarize_chunks(chunks: list[str], llm: LLMClient, max_depth: int = 3, curr
     summaries = []
     for chunk in chunks:
         prompt = ARTICLE_SUMMARIZATION_PROMPT.format(content=chunk)
-        summary = llm.generate_response(prompt)
+        summary = llm.generate_response(prompt, 2500)
         summaries.append(summary)
 
     # combine to one summary
