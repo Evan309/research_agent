@@ -23,7 +23,7 @@ llm_client = LLMClient(os.getenv("GROQ_API_KEY"))
 class TestNewsAgent(unittest.TestCase):
     def setUp(self):
         self.news_agent = NewsAgent(embedder, scraper, llm_client)
-        self.task_planner = TaskPlanner(embedder)
+        self.task_planner = TaskPlanner(embedder, llm_client)
 
     def test_search_GNEWS(self):
         query = "I want recent news about XRP"
@@ -34,7 +34,19 @@ class TestNewsAgent(unittest.TestCase):
         logger.info(f"results: {results}")
 
     def test_summarize_news_article(self):
-        pass
+        query = "I want recent news about artificial intelligence"
+        topic = self.task_planner.get_topic(query)
+        logger.info(f"topic: {topic}")
+        results = self.news_agent.search_GNEWS(topic=topic)
+        logger.info(f"searching GNEWS")
+        
+        if results:
+            article_url = results[0]["url"]
+            logger.info(f"summarizing article url: {article_url}")
+            summary = self.news_agent.summarize_news_article(article_url)
+            logger.info(f"summary: {summary}")
+        else:
+            logger.warning("No articles found to summarize.")
 
 if __name__ == "__main__":
     unittest.main()

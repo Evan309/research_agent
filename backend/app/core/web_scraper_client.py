@@ -34,6 +34,7 @@ class WebScraperClient:
             }
 
         except Exception as e:
+            logger.info(f"Error scraping url {url}: {str(e)}")
             return {
                 "url": url,
                 "error": str(e)

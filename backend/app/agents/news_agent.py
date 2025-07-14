@@ -49,6 +49,6 @@ class NewsAgent:
 
         # chunk and summarize content
         chunks = chunk_text_by_tokens(content)
-        summary = summarize_chunks(chunks)
+        summary = summarize_chunks(chunks, self.llm_client)
         logger.info(f"summary: {summary}")
         return summary
