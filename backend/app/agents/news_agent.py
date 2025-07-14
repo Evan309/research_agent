@@ -3,6 +3,7 @@ import logging
 import os
 import requests
 from dotenv import load_dotenv
+from app.core.utils import chunk_text_by_tokens, summarize_chunks
 
 # initialize logging
 logger = logging.getLogger(__name__)
@@ -44,7 +45,10 @@ class NewsAgent:
         # scrape article url for main content
         scraped_results = self.web_scraper.scrape_article_url(article_url)
         content = scraped_results["content"]
+        logger.info(f"scraped content: {content}")
 
-        # summarize scraped_results content with LLM
-        self.llm_client.generate_response()
-
+        # chunk and summarize content
+        chunks = chunk_text_by_tokens(content)
+        summary = summarize_chunks(chunks)
+        logger.info(f"summary: {summary}")
+        return summary
