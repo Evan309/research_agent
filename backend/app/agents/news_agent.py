@@ -3,6 +3,7 @@ import logging
 import os
 import requests
 from dotenv import load_dotenv
+from app.core.prompts import ARTICLE_SUMMARIZATION_PROMPT
 
 # initialize logging
 logger = logging.getLogger(__name__)
@@ -44,4 +45,5 @@ class NewsAgent:
         # scrape article url for main content
         scraped_results = self.web_scraper.scrape_article_url(article_url)
 
-        # summarize content with LLM
+        # summarize scraped_results content with LLM
+        self.llm_client.generate_response()
