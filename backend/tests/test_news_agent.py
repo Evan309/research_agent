@@ -1,19 +1,28 @@
 import unittest
 import logging
+import os
+import dotenv
 from app.agents.news_agent import NewsAgent
 from app.agents.task_planner import TaskPlanner
 from app.core.embedding_client import EmbeddingClient
+from app.core.llm_client import LLMClient
+from app.core.web_scraper_client import WebScraperClient
+
+# initialize env variables
+dotenv.load_dotenv()
 
 # initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# initialize embedder
+# initialize embedder, scraper, and llm
 embedder = EmbeddingClient()
+scraper = WebScraperClient()
+llm_client = LLMClient(os.getenv("GROQ_API_KEY"))
 
 class TestNewsAgent(unittest.TestCase):
     def setUp(self):
-        self.news_agent = NewsAgent(embedder)
+        self.news_agent = NewsAgent(embedder, scraper, llm_client)
         self.task_planner = TaskPlanner(embedder)
 
     def test_search_GNEWS(self):
@@ -24,6 +33,8 @@ class TestNewsAgent(unittest.TestCase):
         results = self.news_agent.search_GNEWS(topic=topic)
         logger.info(f"results: {results}")
 
+    def test_summarize_news_article(self):
+        pass
 
 if __name__ == "__main__":
     unittest.main()
