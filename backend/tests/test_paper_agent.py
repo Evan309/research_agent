@@ -19,3 +19,7 @@ class TestPaperAgent(unittest.TestCase):
 
         # log results
         logger.info(f"Search results for topic '{self.topic}': {results}")
+
+
+if __name__ == "__main__":
+    unittest.main()

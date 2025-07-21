@@ -15,7 +15,9 @@ class PaperAgent:
 
     # search papers through CORE API
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
-        search_url = "https://api.core.ac.uk/v3/global/all_entities/search"
+        # CORE API endpoint for searching papers
+        entityType = "outputs"
+        search_url = f"https://api.core.ac.uk/v3/search/{entityType}"
         headers = {"Authorization": f"Bearer {self.core_api_key}"}
         body = {
             "q": f"title:'{topic}' OR fullText:'{topic}'",
