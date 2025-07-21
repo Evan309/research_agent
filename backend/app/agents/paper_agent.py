@@ -1,6 +1,7 @@
 import logging
 import os
 import dotenv
+import requests
 
 # initialize logging
 logger = logging.getLogger(__name__)
@@ -17,4 +18,27 @@ class PaperAgent:
 
     # search papers through CORE API
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
-        pass
+        search_url = "https://api.core.ac.uk/v3/global/all_entities/search"
+        headers = {"Authorization": f"Bearer {self.core_api_key}"}
+        body = {
+            "q": f"title:'{topic}' OR fullText:'{topic}'",
+            "limit": max_results,
+            "filters": {
+                "language": ["en"],
+                "documentType": ["research", 
+                                 "research article", 
+                                 "conference paper"]
+            }, 
+            "sort": [
+                {
+                    "field": "yearPublished",
+                    "order": "desc"
+                }
+            ]
+        }
+
+        response = requests.post(search_url, headers=headers, json=body)
+        response.raise_for_status()
+        
+        return response.json()
+
