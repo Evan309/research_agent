@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 #initialize embedder and llm
 embedder = EmbeddingClient()
-llm_client = LLMClient(os.getenv("GROQ_API_KEY"))
+llm_client = LLMClient()
 
 class TestTaskPlanner(unittest.TestCase):
     def setUp(self):

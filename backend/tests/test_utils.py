@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 # initialize llm and scraper
 scraper = WebScraperClient()
-llm_client = LLMClient(os.getenv("GROQ_API_KEY"))
+llm_client = LLMClient()
 
 class TestUtils(unittest.TestCase):
     def setUp(self):

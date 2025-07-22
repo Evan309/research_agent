@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 # initialize embedder, scraper, and llm
 embedder = EmbeddingClient()
 scraper = WebScraperClient()
-llm_client = LLMClient(os.getenv("GROQ_API_KEY"))
+llm_client = LLMClient()
 
 class TestNewsAgent(unittest.TestCase):
     def setUp(self):
