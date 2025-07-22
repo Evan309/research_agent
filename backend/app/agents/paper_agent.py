@@ -14,6 +14,10 @@ class PaperAgent:
         self.core_api_key = os.getenv("CORE_API_KEY")
 
     # search papers through CORE API
+    """ 
+    core api internal server error
+    implement later
+    """
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
         # CORE API endpoint for searching papers
         entityType = "outputs"
@@ -40,4 +44,7 @@ class PaperAgent:
         response.raise_for_status()
         
         return response.json()
+    
+    def search_semantic_papers(self):
+        pass
 
