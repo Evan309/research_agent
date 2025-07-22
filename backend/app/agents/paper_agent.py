@@ -26,8 +26,9 @@ class PaperAgent:
     # search papers through CORE API
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
         # CORE API endpoint for searching papers
+        logger.info(f"searching core api for papers with topic: {topic}")
         entityType = "works"
-        search_url = f"https://api.core.ac.uk/v3/search/works"
+        search_url = f"https://api.core.ac.uk/v3/search/{entityType}"
 
         headers = {
             "Authorization": f"Bearer {self.core_api_key}",
@@ -46,21 +47,28 @@ class PaperAgent:
         response = requests.post(search_url, headers=headers, json=body)
         response.raise_for_status()
         
-        return response.json()
+        return self.parse_core_papers(response.json())
     
     # parse core api results
-    def prase_core_papers(self, data: dict) -> list[dict]:
+    def parse_core_papers(self, data: dict) -> list[dict]:
+        logger.info("parsing core api results")
         results = []
         for item in data.get("results", []):
             paper = {
-
+                "type": item.get("documentType"),
+                "summary": self.summarize_core_papers(item.get("fullText")),
+                "pdfURL": item.get("downloadUrl")
             }
-        pass
+            results.append(paper)
+        
+        return results
 
     # summarize core api full text
     def summarize_core_papers(self, full_text: str) -> str:
         chunks = chunk_text_by_tokens(full_text)
         summary = summarize_chunks(chunks, self.llm_client)
+        logger.info("summarized core api full text")
+        logger.info(f"summary: {summary}")
         return summary
     
     def search_semantic_papers(self):
