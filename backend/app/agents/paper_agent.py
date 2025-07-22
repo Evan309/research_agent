@@ -10,13 +10,10 @@ logger = logging.getLogger(__name__)
 # load environment variables
 dotenv.load_dotenv()
 
-
-
 '''
 search papers using the following apis
 semantic scholar
 core api
-OpenAlex
 '''
 class PaperAgent:
     def __init__(self, LLM_client):
