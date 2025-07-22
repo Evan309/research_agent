@@ -1,14 +1,18 @@
 import unittest
 import logging
 from app.agents.paper_agent import PaperAgent
+from app.core.llm_client import LLMClient
 
 # initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# initialize llm
+llm_client = LLMClient()
+
 class TestPaperAgent(unittest.TestCase):
     def setUp(self):
-        self.agent = PaperAgent()
+        self.agent = PaperAgent(llm_client)
         self.topic = "machine learning"
         self.max_results = 5
 

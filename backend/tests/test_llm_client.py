@@ -8,13 +8,10 @@ from dotenv import load_dotenv
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load environment variables from .env file
-load_dotenv()
-
 class TestLLMClient(unittest.TestCase):
     def setUp(self):
         # Initialize the LLMClient with a mock API key and model
-        self.client = llm_client.LLMClient(api_key=os.getenv("GROQ_API_KEY"), model="llama3-70b-8192")
+        self.client = llm_client.LLMClient(model="llama3-70b-8192")
 
     def test_generate_response(self):
         # Test the generate_response method with a sample prompt

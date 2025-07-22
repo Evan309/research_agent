@@ -1,14 +1,19 @@
 import logging
+import os
+from dotenv import load_dotenv
 from groq import Groq
+
+# initialize env variables
+load_dotenv()
 
 # initialize logging
 logger = logging.getLogger(__name__)
 
 class LLMClient:
-    def __init__(self, api_key: str, model: str = "llama3-70b-8192"):
-        self.api_key = api_key
+    def __init__(self, model: str = "llama3-70b-8192"):
+        self.api_key = os.getenv("GROQ_API_KEY")
         self.model = model
-        self.client = Groq(api_key=api_key)
+        self.client = Groq(api_key=self.api_key)
         logger.info(f"initialized LLMClient with model: {self.model}")
 
 

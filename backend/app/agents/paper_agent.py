@@ -2,7 +2,7 @@ import logging
 import os
 import dotenv
 import requests
-from core.utils import chunk_text_by_tokens, summarize_chunks 
+from app.core.utils import chunk_text_by_tokens, summarize_chunks 
 
 # initialize logging
 logger = logging.getLogger(__name__)
