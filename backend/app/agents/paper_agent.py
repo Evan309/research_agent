@@ -2,6 +2,7 @@ import logging
 import os
 import dotenv
 import requests
+from core.utils import chunk_text_by_tokens, summarize_chunks 
 
 # initialize logging
 logger = logging.getLogger(__name__)
@@ -18,14 +19,11 @@ core api
 OpenAlex
 '''
 class PaperAgent:
-    def __init__(self):
+    def __init__(self, LLM_client):
+        self.llm_client = LLM_client
         self.core_api_key = os.getenv("CORE_API_KEY")
 
     # search papers through CORE API
-    """ 
-    core api internal server error
-    implement later
-    """
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
         # CORE API endpoint for searching papers
         entityType = "works"
@@ -49,6 +47,21 @@ class PaperAgent:
         response.raise_for_status()
         
         return response.json()
+    
+    # parse core api results
+    def prase_core_papers(self, data: dict) -> list[dict]:
+        results = []
+        for item in data.get("results", []):
+            paper = {
+
+            }
+        pass
+
+    # summarize core api full text
+    def summarize_core_papers(self, full_text: str) -> str:
+        chunks = chunk_text_by_tokens(full_text)
+        summary = summarize_chunks(chunks, self.llm_client)
+        return summary
     
     def search_semantic_papers(self):
         pass
