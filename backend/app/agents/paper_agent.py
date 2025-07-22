@@ -59,7 +59,7 @@ class PaperAgent:
             abstract = item.get("abstract")
             
             # if abstract is none summarize full text
-            if not abstract and paper.get("fullText"):
+            if not abstract and item.get("fullText"):
                 abstract = self.summarize_core_papers(item.get("fullText"))
 
             # parse paper 
@@ -69,7 +69,7 @@ class PaperAgent:
                 "summary": abstract,
                 "pdfURL": item.get("downloadUrl")
             }
-            
+
             results.append(paper)
         
         return results
