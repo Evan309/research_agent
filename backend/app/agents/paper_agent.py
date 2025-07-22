@@ -38,19 +38,11 @@ class PaperAgent:
         
         body = {
             "q": f"title:'{topic}' OR fullText:'{topic}'",
-            "limit": max_results,
-            # "filters": {
-            #     "language": ["en"],
-            #     "documentType": ["research", 
-            #                      "research article", 
-            #                      "conference paper"]
-            # }, 
-            # "sort": [
-            #     {
-            #         "field": "yearPublished",
-            #         "order": "desc"
-            #     }
-            # ]
+            "limit": 5,
+            "filters": {
+                "documentType": ["journal article", "conference paper", "review article", "preprint"],
+                "language": ["en"]
+            }
         }
 
         response = requests.post(search_url, headers=headers, json=body)
