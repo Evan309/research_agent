@@ -54,11 +54,22 @@ class PaperAgent:
         logger.info("parsing core api results")
         results = []
         for item in data.get("results", []):
+
+            title = item.get("title", "No title available")
+            abstract = item.get("abstract")
+            
+            # if abstract is none summarize full text
+            if not abstract and paper.get("fullText"):
+                abstract = self.summarize_core_papers(item.get("fullText"))
+
+            # parse paper 
             paper = {
+                "title": title,
                 "type": item.get("documentType"),
-                "summary": self.summarize_core_papers(item.get("fullText")),
+                "summary": abstract,
                 "pdfURL": item.get("downloadUrl")
             }
+            
             results.append(paper)
         
         return results
