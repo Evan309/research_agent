@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 import requests
+
+load_dotenv()
 
 api_key = os.getenv("CORE_API_KEY")
 url = "https://api.core.ac.uk/v3/search/works"
