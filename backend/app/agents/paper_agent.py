@@ -28,24 +28,29 @@ class PaperAgent:
     """
     def search_core_papers(self, topic: str, max_results: int = 10) -> list[dict]:
         # CORE API endpoint for searching papers
-        entityType = "outputs"
-        search_url = f"https://api.core.ac.uk/v3/search/{entityType}"
-        headers = {"Authorization": f"Bearer {self.core_api_key}"}
+        entityType = "works"
+        search_url = f"https://api.core.ac.uk/v3/search/works"
+
+        headers = {
+            "Authorization": f"Bearer {self.core_api_key}",
+            "Content-Type": "application/json"
+        }
+        
         body = {
             "q": f"title:'{topic}' OR fullText:'{topic}'",
             "limit": max_results,
-            "filters": {
-                "language": ["en"],
-                "documentType": ["research", 
-                                 "research article", 
-                                 "conference paper"]
-            }, 
-            "sort": [
-                {
-                    "field": "yearPublished",
-                    "order": "desc"
-                }
-            ]
+            # "filters": {
+            #     "language": ["en"],
+            #     "documentType": ["research", 
+            #                      "research article", 
+            #                      "conference paper"]
+            # }, 
+            # "sort": [
+            #     {
+            #         "field": "yearPublished",
+            #         "order": "desc"
+            #     }
+            # ]
         }
 
         response = requests.post(search_url, headers=headers, json=body)
