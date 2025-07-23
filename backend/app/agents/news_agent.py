@@ -42,6 +42,7 @@ class NewsAgent:
         results = data["articles"]
 
         # parse data
+        logger.info(f"parsing {data["totalArticles"]} GNEWS articles")
         parsed_results = [self.parse_GNEWS_article(article) for article in results]
         return parsed_results[:max_results]
 

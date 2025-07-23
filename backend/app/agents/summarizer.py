@@ -39,10 +39,15 @@ class Summarizer:
                 response.append(bullet)
 
         # parse news if news subtask was called
-        # if results.get("news"):
-        #     logger.info("parsing news from news agent")
-        #     news = results.get("news")
-        #     response.append("\n **Recent News**:")
-        #     for article in news:
-        #         title = 
+        if results.get("news"):
+            logger.info("parsing news from news agent")
+            news = results.get("news")
+            response.append("\n **Recent News**:")
+            for article in news:
+                title = article["title"]
+                description = article["description"]
+                url = article["url"]
+                bullet = f"- **{title}** – {description[:200]}{'...' if len(description) > 200 else ''} {f'[{url}]' if url else ''}"
+                response.append(bullet)
 
+        return "\n".join(response).strip()
