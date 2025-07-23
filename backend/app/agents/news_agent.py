@@ -22,8 +22,12 @@ class NewsAgent:
     # search news with GNEWS api
     def search_GNEWS(self, topic: str, max_results: int = 10, sortby: str = "publishedAt") -> list[dict]:
         search_url = f"https://gnews.io/api/v4/search"
+
+        # configure query
+        language = "en"
         params = {
             "q": topic,
+            "lang": language,
             "token": self.GNEWS_API_KEY,
             "max": max_results,
             "sortby": sortby
@@ -36,7 +40,10 @@ class NewsAgent:
         data = response.json()
         logger.info(f"number of articles found: {data["totalArticles"]}")
         results = data["articles"]
-        return results[:max_results]
+
+        # parse data
+        parsed_results = [self.parse_GNEWS_article(article) for article in results]
+        return parsed_results[:max_results]
 
     # summarize news articles by scraping article urls
     def summarize_news_article(self, article_url: str):
@@ -52,3 +59,15 @@ class NewsAgent:
         summary = summarize_chunks(chunks, self.llm_client)
         logger.info(f"summary: {summary}")
         return summary
+
+    # parse GNEWS api response data
+    def parse_GNEWS_article(self, article: dict) -> dict:
+        # parse data needed
+        article_info = {
+            "id": article["id"],
+            "title": article["title"],
+            "description": article["description"],
+            "url": article["url"]
+        }
+
+        return article_info
