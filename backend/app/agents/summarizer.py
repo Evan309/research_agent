@@ -27,10 +27,22 @@ class Summarizer:
                 response.append(bullet)
             
         # parse datasets if dataset subtask was called
-        # if results.get("datasets"):
-        #     logger.info("parsing results from dataset agent")
-        #     datasets = results.get("datasets")
-        #     response.append("**Relevant Datasets**:")
-        #     for dataset in datasets:
-                
+        if results.get("datasets"):
+            logger.info("parsing results from dataset agent")
+            datasets = results.get("datasets")
+            response.append("\n **Relevant Datasets**:")
+            for dataset in datasets:
+                title = dataset["title"]
+                description = dataset["description"]
+                url = dataset["url"]
+                bullet = f"- **{title}** – {description[:200]}{'...' if len(description) > 200 else ''} {f'[{url}]' if url else ''}"
+                response.append(bullet)
+
+        # parse news if news subtask was called
+        # if results.get("news"):
+        #     logger.info("parsing news from news agent")
+        #     news = results.get("news")
+        #     response.append("\n **Recent News**:")
+        #     for article in news:
+        #         title = 
 
