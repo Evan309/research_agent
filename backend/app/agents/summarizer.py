@@ -15,9 +15,9 @@ class Summarizer:
         response = [f"Here's what I found about **{topic}**:\n"]
 
         # parse papers if papers subtask was called
-        if results.get("papers"):
+        if results.get("find_papers"):
             logger.info("parsing results from paper agent")
-            papers = results.get("papers")
+            papers = results.get("find_papers")
             response.append("**Research Papers**:")
             for paper in papers:
                 title = paper.get("titile", "Untitled")
@@ -27,9 +27,9 @@ class Summarizer:
                 response.append(bullet)
             
         # parse datasets if dataset subtask was called
-        if results.get("datasets"):
+        if results.get("find_datasets"):
             logger.info("parsing results from dataset agent")
-            datasets = results.get("datasets")
+            datasets = results.get("find_datasets")
             response.append("\n **Relevant Datasets**:")
             for dataset in datasets:
                 title = dataset["title"]
@@ -39,9 +39,9 @@ class Summarizer:
                 response.append(bullet)
 
         # parse news if news subtask was called
-        if results.get("news"):
+        if results.get("find_news"):
             logger.info("parsing news from news agent")
-            news = results.get("news")
+            news = results.get("find_news")
             response.append("\n **Recent News**:")
             for article in news:
                 title = article["title"]

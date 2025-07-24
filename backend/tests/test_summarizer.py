@@ -48,6 +48,7 @@ class TestSummarizer(unittest.TestCase):
         # get subtasks and topic
         topic = self.task_planner.get_topic(prompt)
         subtasks = self.task_planner.get_subtasks(prompt)
+        results["topic"] = topic
 
         # execute subtasks
         logger.info(f"executing subtasks: {subtasks}")
@@ -66,3 +67,7 @@ class TestSummarizer(unittest.TestCase):
         # summarize results of all tasks
         summary = self.summarizer.summarize(results)
         logger.info(f"completed output: {summary}")
+
+
+if __name__ == "__main__":
+    unittest.main()
