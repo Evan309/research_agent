@@ -20,13 +20,19 @@ class LLMClient:
     def generate_response(self, prompt: str, max_tokens: int, temperature: float = 0.7) -> str:
 
         # gerate a response using the Groq client
-        logger.info(f"Generating response for prompt: {prompt} with max_tokens: {max_tokens}")
-        response = self.client.chat.completions.create(
-            model = self.model,
-            messages = [{"role": "user", "content": prompt}],
-            max_tokens = max_tokens,
-            temperature = temperature
-        )
+        logger.info{f"sending prompt to Groq LLM API: {prompt}, with max tokens: {max_tokens}"}
+        try:
+            response = self.client.chat.completions.create(
+                model = self.model,
+                messages = [{"role": "user", "content": prompt}],
+                max_tokens = max_tokens,
+                temperature = temperature
+            )
 
-        logger.info(f"Response generated: {response.choices[0].message.content}")
-        return response.choices[0].message.content
+            response = response.choices[0].message.content
+            logger.info(f"Response generated: {response}")
+            return response
+
+        except Exception as e:
+            logger.error(f"Groq LLM API call failed: {e}")
+            return "Sorry, something went wrong generating the response."
