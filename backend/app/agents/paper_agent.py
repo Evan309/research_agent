@@ -41,10 +41,14 @@ class PaperAgent:
             }
         }
 
-        response = requests.post(search_url, headers=headers, json=body)
-        response.raise_for_status()
+        try:
+            response = requests.post(search_url, headers=headers, json=body)
+            response.raise_for_status()
+            return self.parse_core_papers(response.json())
         
-        return self.parse_core_papers(response.json())
+        except Exception as e:
+            logger.error(f"searching core api for papers failed: {e}")
+            return None
     
     # parse core api results
     def parse_core_papers(self, data: dict) -> list[dict]:
