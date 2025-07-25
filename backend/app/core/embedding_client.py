@@ -11,7 +11,7 @@ class EmbeddingClient:
         logger.info(f"intialized sentence transformer with model: {model}")
 
     def encode(self, text: str, to_tensor: bool = True):
-        logger.info(f"embedding text: {text}, with convert_to_tensor set to {to_tensor}")
+        logger.info(f"embedding text: {text[:60]}, with convert_to_tensor set to {to_tensor}")
         return self.model.encode(text, convert_to_tensor=to_tensor)
     
     def similarity(self, emb_one, emb_two) -> torch.Tensor:

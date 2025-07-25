@@ -14,20 +14,23 @@ class DatasetAgent:
     def search_kaggle_datasets(self, topic: str, num_datasets: int = 10) -> list[dict]:
         # search kaggle datasets for topic
         logger.info(f"searching kaggle datasets for topic: {topic}")
-        results = self.kaggle_api.dataset_list(search=topic, sort_by="hottest")
-        logger.info(f"found {len(results)} datasets")
+        try:
+            results = self.kaggle_api.dataset_list(search=topic, sort_by="hottest")
+            logger.info(f"found {len(results)} datasets")
 
-        # parse kaggle datasets
-        parsed_datasets = [self.parse_kaggle_dataset(dataset) for dataset in results]
-        logger.info(f"parsed {len(parsed_datasets)} datasets")
+            # parse kaggle datasets
+            parsed_datasets = [self.parse_kaggle_dataset(dataset) for dataset in results]
+            logger.info(f"parsed {len(parsed_datasets)} datasets")
 
-        # get relevant datasets
-        relevant_datasets = self.get_relevant_kaggle_datasets(topic, parsed_datasets)
-        logger.info(f"found {len(relevant_datasets)} relevant datasets")
+            # get relevant datasets
+            relevant_datasets = self.get_relevant_kaggle_datasets(topic, parsed_datasets)
+            logger.info(f"found {len(relevant_datasets)} relevant datasets")
 
-        # return relevant datasets
-        logger.info(f"returning {num_datasets} relevant datasets")
-        return relevant_datasets[:num_datasets]
+            # return relevant datasets
+            logger.info(f"returning {num_datasets} relevant datasets")
+            return relevant_datasets[:num_datasets]
+        except Exception as e:
+            logger.error(f"search kaggle datasets failed: {e}")
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
@@ -44,11 +47,11 @@ class DatasetAgent:
             description_embedding = self.embedder.encode(dataset["description"])
 
             # calculate similarity between dataset and topic
-            logger.info(f"calculating similarity between dataset: {dataset['title']} and topic: {topic}")
+            logger.info(f"calculating similarity between title and topic: {topic}")
             title_similarity = self.embedder.similarity(title_embedding, topic_embedding)
-            logger.info(f"calculating similarity between subtitle: {dataset['subtitle']} and topic: {topic}")
+            logger.info(f"calculating similarity between subtitle and topic: {topic}")
             subtitle_similarity = self.embedder.similarity(subtitle_embedding, topic_embedding)
-            logger.info(f"calculating similarity between description: {dataset['description']} and topic: {topic}")
+            logger.info(f"calculating similarity between description and topic: {topic}")
             description_similarity = self.embedder.similarity(description_embedding, topic_embedding)
 
             # calculate similarity score

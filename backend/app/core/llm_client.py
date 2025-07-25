@@ -19,8 +19,9 @@ class LLMClient:
 
     def generate_response(self, prompt: str, max_tokens: int, temperature: float = 0.7) -> str:
 
-        # gerate a response using the Groq client
-        logger.info{f"sending prompt to Groq LLM API: {prompt}, with max tokens: {max_tokens}"}
+        # generate a response using the Groq client
+        logger.info(f"sending prompt to Groq LLM API: {prompt}, with max tokens: {max_tokens}")
+
         try:
             response = self.client.chat.completions.create(
                 model = self.model,
