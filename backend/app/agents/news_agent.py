@@ -34,17 +34,22 @@ class NewsAgent:
         }
         logger.info(f"searching news with topic: {topic}")
 
-        response = requests.get(search_url, params)
+        try:
+            response = requests.get(search_url, params)
 
-        # return list of articles
-        data = response.json()
-        logger.info(f"number of articles found: {data["totalArticles"]}")
-        results = data["articles"]
+            # return list of articles
+            data = response.json()
+            logger.info(f"number of articles found: {data["totalArticles"]}")
+            results = data["articles"]
 
-        # parse data
-        logger.info(f"parsing {data["totalArticles"]} GNEWS articles")
-        parsed_results = [self.parse_GNEWS_article(article) for article in results]
-        return parsed_results[:max_results]
+            # parse data
+            logger.info(f"parsing {data["totalArticles"]} GNEWS articles")
+            parsed_results = [self.parse_GNEWS_article(article) for article in results]
+            return parsed_results[:max_results]
+        
+        except Exception as e:
+            logger.error(f"searching news failed: {e}")
+            return None
 
     # summarize news articles by scraping article urls
     def summarize_news_article(self, article_url: str):

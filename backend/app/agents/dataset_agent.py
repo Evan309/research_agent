@@ -29,8 +29,10 @@ class DatasetAgent:
             # return relevant datasets
             logger.info(f"returning {num_datasets} relevant datasets")
             return relevant_datasets[:num_datasets]
+        
         except Exception as e:
             logger.error(f"search kaggle datasets failed: {e}")
+            return None
 
     def search_huggingface_datasets(self, topic: str) -> list[dict]:
         pass
