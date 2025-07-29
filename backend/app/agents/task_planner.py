@@ -9,9 +9,9 @@ class TaskPlanner:
         self.embedder = embedder
         self.llm_client = LLM_client
         self.task_descriptions = {
-            "find_papers": "Get me research or scholarly publications.",
-            "find_datasets": "Get me datasets related to this query.",
-            "find_news": "I want the latest news on this topic.",
+            "find_papers": "Get me research or scholarly publications. I want to read papers about this. Find articles written by experts or scientists.",
+            "find_datasets": "Get me datasets related to this query. I'm looking for public data I can analyze. Help me find relevant data sources",
+            "find_news": "I want the latest news on this topic. Get current events, announcements, or press coverage. Give me up-to-date headlines about this subject.",
         }
 
     # get subtasks matching the query using sentence transformers
