@@ -43,7 +43,7 @@ class TestSummarizer(unittest.TestCase):
         results = {}
 
         # prompt
-        prompt = "Show me recent research on transformer models in NLP."
+        prompt = "Find scholarly articles on machine learning fairness."
 
         # get subtasks and topic
         topic = self.task_planner.get_topic(prompt)
