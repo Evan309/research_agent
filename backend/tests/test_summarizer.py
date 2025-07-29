@@ -43,7 +43,7 @@ class TestSummarizer(unittest.TestCase):
         results = {}
 
         # prompt
-        prompt = "I would like research papers and datasets on autonomous vehicles"
+        prompt = "I want datasets on infant mortality rate"
 
         # get subtasks and topic
         topic = self.task_planner.get_topic(prompt)
