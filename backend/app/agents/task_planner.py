@@ -20,6 +20,7 @@ class TaskPlanner:
         # encode the query using the sentence transformer model
         logger.info(f"Encoding query: {query}")
         query_emb = self.embedder.encode(query, True)
+        threshold = 0.35
         subtasks = []
 
         for task, description in self.task_descriptions.items():
@@ -31,7 +32,7 @@ class TaskPlanner:
             logger.info(f"Calculating similarity between query and task: {task}")
             similarity = self.embedder.similarity(query_emb, task_emb)
 
-            if similarity.item() > 0.3:
+            if similarity.item() > threshold:
                 subtasks.append(task)
 
         if not subtasks:
