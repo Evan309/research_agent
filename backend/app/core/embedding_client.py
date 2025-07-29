@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class EmbeddingClient:
-    def __init__(self, model: str = "all-MiniLM-L6-v2"):
+    def __init__(self, model: str = "sentence-transformers/all-mpnet-base-v2"):
         self.model = st.SentenceTransformer(model)
         logger.info(f"intialized sentence transformer with model: {model}")
 
