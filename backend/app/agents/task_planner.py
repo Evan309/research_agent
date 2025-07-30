@@ -11,7 +11,7 @@ class TaskPlanner:
         self.task_descriptions = {
             "find_papers": "Find academic research papers, scientific studies, or scholarly articles related to the user's topic. Help the user read expert-written papers on the subject they’re interested in. Return reliable research from journals, universities, or conferences.",
             "find_datasets": "Find datasets, data collections, or CSV files that match the user's topic. Help the user locate public or open-source data they can download and analyze. Return structured data from portals, repositories, or research sources.",
-            "find_news": "Find recent news articles, headlines, or media updates about the user’s topic. Help the user stay informed on current events or developments in that area. Return trustworthy news from popular or relevant media outlets."
+            "find_news": "Get the latest news, headlines, or current events about the user's topic. Show what is happening right now in the world related to the subject. Return recent articles or news coverage from trusted sources."
         }
 
     # get subtasks matching the query using sentence transformers
