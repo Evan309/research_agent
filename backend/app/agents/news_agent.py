@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 # load environment variables
 load_dotenv()
 
-
+"""
+integrate web searcher tool for recent news on google
+"""
 class NewsAgent:
     def __init__(self, embedder, web_scraper, LLM_client):
         self.embedder = embedder
