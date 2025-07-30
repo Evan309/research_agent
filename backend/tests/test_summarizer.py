@@ -43,7 +43,7 @@ class TestSummarizer(unittest.TestCase):
         results = {}
 
         # prompt
-        prompt = "Give me recent news articles about AI"
+        prompt = "Get me data and recent news on generative AI in education."
 
         # get subtasks and topic
         topic = self.task_planner.get_topic(prompt)
