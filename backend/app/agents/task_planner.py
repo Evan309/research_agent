@@ -14,11 +14,42 @@ class TaskPlanner:
     def __init__(self, embedder, LLM_client):
         self.embedder = embedder
         self.llm_client = LLM_client
+        self.chat_examples = [
+            "How are you today?",
+            "Tell me a joke.",
+            "What's your name?",
+            "Give me some tips for learning Python.",
+            "What's trending in tech?"
+        ]
+        self.research_examples = [
+            "Find recent papers on AI alignment.",
+            "I need a dataset on income inequality.",
+            "Give me news articles about quantum computing.",
+            "What are the latest studies on climate change?",
+            "Search for research on protein folding."
+        ]
+        self.chat_emb = [self.embedder.encode(e) for e in self.chat_examples]
+        self.research_emb = [self.embedder.encode(e) for e in self.research_examples]
         self.task_descriptions = {
             "find_papers": "Find academic research papers, scientific studies, or scholarly articles related to the user's topic. Help the user read expert-written papers on the subject they’re interested in. Return reliable research from journals, universities, or conferences.",
             "find_datasets": "Find datasets, data collections, or CSV files that match the user's topic. Help the user locate public or open-source data they can download and analyze. Return structured data from portals, repositories, or research sources.",
             "find_news": "Get the latest news, headlines, or current events about the user's topic. Show what is happening right now in the world related to the subject. Return recent articles or news coverage from trusted sources."
         }
+
+    # classify user prompt intent (chat or research) using embeddings
+    def classify_intent(self, query: str) -> str:
+        # encode query
+        query_emb = self.embedder.encode(query)
+
+        # compute similarity
+        chat_similarity = [self.embedder.similarity(query_emb, e) for e in self.chat_emb]
+        research_similarity = [self.embedder.similarity(query_emb, e) for e in self.research_emb]
+
+        # compute average
+        chat_avg = sum([sim.item() for sim in chat_similarity]) / len(chat_similarity)
+        research_avg = sum([sim.item() for sim in research_similarity]) / len(research_similarity)
+
+        return "chat" if chat_avg > research_avg else "research"
 
     # get subtasks matching the query using sentence transformers
     def get_subtasks(self, query: str) -> list[str]:
