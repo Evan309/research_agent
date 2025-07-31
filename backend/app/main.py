@@ -92,4 +92,5 @@ async def query_endpoint(request: QueryRequest):
         research_results["response"] = summarizer.summarize(research_results, request.query)
         results["research_results"] = research_results
 
+    logger.info(f"generated response: {results}")
     return results
