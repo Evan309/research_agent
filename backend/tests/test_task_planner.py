@@ -33,6 +33,15 @@ class TestTaskPlanner(unittest.TestCase):
         topic = self.task_planner.get_topic(query)
         logger.info(f"topic: {topic}")
 
+    def test_classify_intent(self):
+        logger.info("testing classify intent")
+        query = "I want to find research papers on machine learning"
+        query2 = "Who is the current president"
+        intent = self.task_planner.classify_intent(query)
+        intent2 = self.task_planner.classify_intent(query2)
+        logger.info(f"intent: {intent}")
+        logger.info(f"intent2: {intent2}")
+
 
 if __name__ == "__main__":
     unittest.main()
