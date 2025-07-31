@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
 import { Plus, Brain } from "lucide-react";
 import { ConversationItem } from "./conversation_item";
 import { mockConversations } from "../../utils/mock_data";

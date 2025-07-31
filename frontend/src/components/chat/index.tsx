@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "../ui/scroll-area";
+import { Badge } from "../ui/badge";
 import { Sparkles } from "lucide-react";
 import { MessageBubble } from "./message_bubble";
 import { LoadingIndicator } from "./loading_indicator";

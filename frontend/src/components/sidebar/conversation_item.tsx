@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "../ui/card";
 import { MessageSquare } from "lucide-react";
 import type { Conversation } from "../../types/index";
 

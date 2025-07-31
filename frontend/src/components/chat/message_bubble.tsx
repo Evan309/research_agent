@@ -1,8 +1,8 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Card } from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 import { FileText, ExternalLink, Zap } from "lucide-react";
 import { getResearchIcon } from "../../utils/icons";
 import type { Message } from "../../types/index";

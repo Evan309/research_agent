@@ -3,7 +3,7 @@ import { Sidebar } from "./components/sidebar";
 import { Chat } from "./components/chat";
 import { useChat } from "./hooks/use_chat";
 
-export default function AIResearchAgent() {
+export default function App() {
   const [activeConversationId, setActiveConversationId] = useState<string>("1");
   const { messages, isLoading, error, sendMessage, clearError } = useChat();
 
@@ -34,4 +34,4 @@ export default function AIResearchAgent() {
       />
     </div>
   );
-}
+} 
