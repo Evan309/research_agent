@@ -17,7 +17,7 @@ class LLMClient:
         logger.info(f"initialized LLMClient with model: {self.model}")
 
 
-    def generate_response(self, prompt: str, max_tokens: int, temperature: float = 0.7) -> str:
+    def generate_response(self, prompt: str, max_tokens: int = 300, temperature: float = 0.7) -> str:
 
         # generate a response using the Groq client
         logger.info(f"sending prompt to Groq LLM API: {prompt}, with max tokens: {max_tokens}")

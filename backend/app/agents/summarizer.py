@@ -1,5 +1,7 @@
 import logging
 
+from app.core.prompts import SUMMARY_PROMPT
+
 # initialize logging
 logger = logging.getLogger(__name__)
 
@@ -7,12 +9,14 @@ class Summarizer:
     def __init__(self, llm_client):
         self.llm_client = llm_client
 
-    # summarize response
-    def summarize_response(self, results: str) -> str:
-        pass
+    # query llm for summary
+    def summarize_response(self, results: str, query: str) -> str:
+        prompt = SUMMARY_PROMPT.format(query=query, results=results)
+        summary = self.llm_client.generate_response(prompt)
+        return summary
 
     # summarize results of subtasks
-    def summarize(self, results: dict) -> str:
+    def summarize(self, results: dict, query: str) -> str:
         logger.info(f"summarizing results: {results}")
         topic = results.get("topic", "your topic")
 
@@ -54,4 +58,6 @@ class Summarizer:
                 bullet = f"- **{title}** – {description[:200]}{'...' if len(description) > 200 else ''} {f'[{url}]' if url else ''}"
                 response.append(bullet)
 
-        return "\n".join(response).strip()
+        summary = self.summarize_response(results, query)
+        logger.info(f"final summary: {summary}")
+        return summary

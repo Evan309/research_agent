@@ -18,3 +18,13 @@ Article:
 
 Summary:
 """
+
+SUMMARY_PROMPT = """
+You are an assistant summarizing research agent results for a developer.
+Given the following user query and results (papers, datasets, and news), write a 2-3 sentence summary that is clear and friendly.
+
+Query: "{query}"
+Results: {results_text}
+
+Summary:
+"""
