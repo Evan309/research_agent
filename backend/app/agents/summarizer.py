@@ -7,6 +7,10 @@ class Summarizer:
     def __init__(self, llm_client):
         self.llm_client = llm_client
 
+    # summarize response
+    def summarize_response(self, results: str) -> str:
+        pass
+
     # summarize results of subtasks
     def summarize(self, results: dict) -> str:
         logger.info(f"summarizing results: {results}")
