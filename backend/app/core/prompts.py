@@ -53,10 +53,6 @@ Query: "What are some recent papers and datasets on wildfire detection?"
 Thought: The user is looking for both research papers and datasets on wildfire detection. No need for news or chat.
 Subtasks: ["find_papers", "find_datasets"]
 
-Query: "How can I build a transformer model?"
-Thought: The user is asking for advice or guidance, not asking the agent to retrieve papers or data.
-Subtasks: ["chat"]
-
 Query: "Give me the latest news and data on electric vehicles"
 Thought: The user is interested in recent events and data, so news and datasets are relevant.
 Subtasks: ["find_datasets", "find_news"]

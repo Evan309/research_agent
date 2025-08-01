@@ -1,6 +1,7 @@
 import logging
 from app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
 from app.core.prompts import REACT_TASK_PLANNER_PROMPT
+from app.core.utils import extract_subtask_list
 
 # Initialize logging
 logger = logging.getLogger(__name__)
@@ -74,8 +75,8 @@ class TaskPlanner:
                 subtasks.append(task)
 
         if not subtasks:
-            logger.info("no tasks found adding all tasks")
-            subtasks = list(self.task_descriptions.keys())
+            logger.info("no tasks found from embeddings, pivoting to thought process in REACT")
+            subtasks = self.llm_thought(query)
 
         logger.info(f"Identified subtasks: {subtasks}")
         return subtasks
@@ -94,4 +95,7 @@ class TaskPlanner:
         # format prompt and call llm
         prompt = REACT_TASK_PLANNER_PROMPT.format(query=query)
         response = self.llm_client.generate_response(prompt, 256, 0.3)
-        return response
+
+        # prase subtasks into list format
+        subtasks = extract_subtask_list(response)
+        return subtasks

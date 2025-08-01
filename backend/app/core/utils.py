@@ -1,3 +1,4 @@
+import ast
 from transformers import AutoTokenizer
 from app.core.llm_client import LLMClient
 from app.core.prompts import ARTICLE_SUMMARIZATION_PROMPT
@@ -18,7 +19,6 @@ def chunk_text_by_tokens(text: str, max_tokens: int = 2000) -> list[str]:
 
 # recursively summarize list of chunks
 def summarize_chunks(chunks: list[str], llm: LLMClient, max_depth: int = 3, current_depth: int = 0) -> str:
-    
     if not chunks:
         return ""
     
@@ -39,3 +39,16 @@ def summarize_chunks(chunks: list[str], llm: LLMClient, max_depth: int = 3, curr
     # recursive call
     new_chunks = chunk_text_by_tokens(combined_summary)
     return summarize_chunks(new_chunks, llm, max_depth, current_depth + 1)
+
+# parse list of subtasks from llm response
+def extract_subtask_list(response: str) -> list[str]:
+    try:
+        # Find the line that starts with "Subtasks:"
+        for line in response.splitlines():
+            if line.strip().startswith("Subtasks:"):
+                list_str = line.split("Subtasks:")[1].strip()
+                return ast.literal_eval(list_str)
+            
+    except (SyntaxError, ValueError) as e:
+        print(f"Error parsing subtasks: {e}")
+        return []
