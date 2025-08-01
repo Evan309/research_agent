@@ -79,6 +79,13 @@ async def query_endpoint(request: QueryRequest):
 
         # get subtasks
         subtasks = task_planner.get_subtasks(request.query)
+
+        # if subtasks is none and llm thought clasifies chat subtasks, then return chat response
+        if "chat" in subtasks:
+            logger.info("generating chat response")
+            chat_response = llm_client.generate_response(request.query, 500)
+            logger.info(f"response: {chat_response}")
+            results["response"] = chat_response
         
         # execute subtasks
         if "find_datasets" in subtasks:
