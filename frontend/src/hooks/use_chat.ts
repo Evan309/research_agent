@@ -46,24 +46,29 @@ export const useChat = () => {
       } else if (response.intent === "research") {
         assistantContent = response.research_results?.response || "I've completed my research. Here are the findings:";
         
-        // Collect sources from research results
+        // Collect sources from research results with correct field mapping
         if (response.research_results) {
+          // Map datasets (from DatasetAgent)
           if (response.research_results.datasets) {
             sources.push(...response.research_results.datasets.map((dataset: any) => ({
               title: dataset.title || "Dataset",
               url: dataset.url || "#",
-              snippet: dataset.description || "Dataset information",
+              snippet: dataset.description || dataset.subtitle || "Dataset information",
               domain: "kaggle.com"
             })));
           }
+          
+          // Map papers (from PaperAgent)
           if (response.research_results.papers) {
             sources.push(...response.research_results.papers.map((paper: any) => ({
               title: paper.title || "Research Paper",
-              url: paper.url || "#",
-              snippet: paper.abstract || "Academic paper",
+              url: paper.pdfURL || "#",
+              snippet: paper.summary || paper.abstract || "Academic paper",
               domain: "core.ac.uk"
             })));
           }
+          
+          // Map news (from NewsAgent)
           if (response.research_results.news) {
             sources.push(...response.research_results.news.map((news: any) => ({
               title: news.title || "News Article",

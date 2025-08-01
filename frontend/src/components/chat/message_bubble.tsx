@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { FileText, ExternalLink, Zap } from "lucide-react";
 import { getResearchIcon } from "../../utils/icons";
@@ -10,6 +9,14 @@ import type { Message } from "../../types/index";
 interface MessageBubbleProps {
   message: Message;
 }
+
+// Function to truncate text to approximately 20 words
+const truncateToWords = (text: string, maxWords: number = 20): string => {
+  if (!text) return "";
+  const words = text.split(' ');
+  if (words.length <= maxWords) return text;
+  return words.slice(0, maxWords).join(' ') + '...';
+};
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const isUser = message.role === "user";
@@ -55,12 +62,17 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                       {source.title}
                     </h4>
                     <p className="text-xs text-zinc-300 mb-3 leading-relaxed">
-                      {source.snippet}
+                      {truncateToWords(source.snippet)}
                     </p>
                     <div className="flex items-center space-x-2">
-                      <Badge className="text-xs bg-zinc-700/50 text-zinc-300 border-zinc-600/50 rounded-lg px-2 py-1">
-                        {source.domain}
-                      </Badge>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-blue-400 hover:text-blue-300 underline break-all"
+                      >
+                        {source.url}
+                      </a>
                     </div>
                   </div>
                   <Button

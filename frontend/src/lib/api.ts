@@ -39,7 +39,9 @@ class ApiClient {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log('Backend response:', data); // Debug log
+      return data;
     } catch (error) {
       console.error('API request failed:', error);
       throw error;
