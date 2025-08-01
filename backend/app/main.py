@@ -38,9 +38,9 @@ llm_client = LLMClient()
 web_scraper = WebScraperClient()
 
 # Load agents
-task_planner = TaskPlanner(embedder=EmbeddingClient, LLM_client=llm_client)
+task_planner = TaskPlanner(embedder=embedder, LLM_client=llm_client)
 dataset_agent = DatasetAgent(embedder=embedder)
-news_agent = NewsAgent(embedder=EmbeddingClient, web_scraper=web_scraper, LLM_client=llm_client)
+news_agent = NewsAgent(embedder=embedder, web_scraper=web_scraper, LLM_client=llm_client)
 paper_agent = PaperAgent(LLM_client=llm_client)
 summarizer = Summarizer(llm_client=llm_client)
 

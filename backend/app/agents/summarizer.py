@@ -11,7 +11,7 @@ class Summarizer:
 
     # query llm for summary
     def summarize_response(self, results: str, query: str) -> str:
-        prompt = SUMMARY_PROMPT.format(query=query, results=results)
+        prompt = SUMMARY_PROMPT.format(query=query, results_text=results)
         summary = self.llm_client.generate_response(prompt)
         return summary
 
