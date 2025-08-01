@@ -42,6 +42,11 @@ class TestTaskPlanner(unittest.TestCase):
         logger.info(f"intent: {intent}")
         logger.info(f"intent2: {intent2}")
 
+    def test_llm_thought(self):
+        logger.info("testing llm thought process in REACT")
+        query = "I'm working on a project that predicts infant mortality rates using machine learning. Can you help me find some datasets and recent papers on this?"
+        subtasks = self.task_planner.llm_thought(query)
+        logger.info(f"subtasks: {subtasks}")
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,6 @@
 import logging
 from app.core.prompts import TOPIC_CLASSIFICATION_PROMPT
+from app.core.prompts import REACT_TASK_PLANNER_PROMPT
 
 # Initialize logging
 logger = logging.getLogger(__name__)
@@ -78,7 +79,6 @@ class TaskPlanner:
 
         logger.info(f"Identified subtasks: {subtasks}")
         return subtasks
-    
 
     # get topic matching the query using LLM
     def get_topic(self, query: str) -> str:
@@ -87,4 +87,11 @@ class TaskPlanner:
         logger.info(f"retrieving topic for query: {query}")
         response = self.llm_client.generate_response(prompt, max_tokens=100)
         logger.info(f"topic: {response}")
+        return response
+    
+    # query llm to think about query and return subtasks
+    def llm_thought(self, query: str) -> list[str]:
+        # format prompt and call llm
+        prompt = REACT_TASK_PLANNER_PROMPT.format(query=query)
+        response = self.llm_client.generate_response(prompt, 256, 0.3)
         return response

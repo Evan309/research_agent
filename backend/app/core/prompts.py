@@ -28,3 +28,42 @@ Results: {results_text}
 
 Summary:
 """
+
+REACT_TASK_PLANNER_PROMPT = """
+You are an AI research assistant helping developers find resources for their projects.
+
+Given a user's query, think step-by-step about what subtasks you should do to help them. Subtasks can include:
+- find_papers: Search for academic papers, studies, or scientific articles
+- find_datasets: Search for relevant datasets
+- find_news: Search for recent news articles or announcements
+- chat: Engage in friendly conversation, answer general or technical questions without retrieving external resources
+
+Follow this format:
+
+Query: "<user_query>"
+
+Thought: Reason step-by-step about what the user is asking and what kind of help they want.
+
+Subtasks: A Python list of subtasks (like ["find_papers", "find_datasets"]) that should be executed.
+Only include relevant subtasks.
+
+Examples:
+
+Query: "What are some recent papers and datasets on wildfire detection?"
+Thought: The user is looking for both research papers and datasets on wildfire detection. No need for news or chat.
+Subtasks: ["find_papers", "find_datasets"]
+
+Query: "How can I build a transformer model?"
+Thought: The user is asking for advice or guidance, not asking the agent to retrieve papers or data.
+Subtasks: ["chat"]
+
+Query: "Give me the latest news and data on electric vehicles"
+Thought: The user is interested in recent events and data, so news and datasets are relevant.
+Subtasks: ["find_datasets", "find_news"]
+
+Now use this format to analyze the next query.
+
+Query: "{query}"
+
+Thought:
+"""
