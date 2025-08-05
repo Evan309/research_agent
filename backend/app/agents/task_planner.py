@@ -7,11 +7,6 @@ from app.core.utils import extract_subtask_list
 logger = logging.getLogger(__name__)
 
 
-"""
-embedding client is struggling to classify subtasks from user prompt. integrate llm "thought" into workflow. example workflow:
-if max(similarity_score) < .35:
-    call "thought" process through llm
-"""
 class TaskPlanner:
     def __init__(self, embedder, LLM_client):
         self.embedder = embedder

@@ -1,0 +1,37 @@
+# Core Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Data Validation & Settings
+pydantic==2.5.0
+python-dotenv==1.0.0
+
+# AI/ML Libraries
+sentence-transformers==2.2.2
+torch==2.1.1
+transformers==4.36.2
+groq==0.4.2
+
+# HTTP Client & Web Scraping
+requests==2.31.0
+beautifulsoup4==4.12.2
+readability-lxml==0.8.1
+
+# Data Processing & APIs
+kaggle==1.5.16
+
+# Testing Framework
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-asyncio==0.21.1
+
+# Development & Code Quality
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Logging & Monitoring
+structlog==23.2.0
+
+# Optional: For production deployment
+gunicorn==21.2.0 
