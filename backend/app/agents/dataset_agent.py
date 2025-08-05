@@ -85,6 +85,3 @@ class DatasetAgent:
         logger.info(f"parsed kaggle dataset: {dataset_info}")
         return dataset_info
     
-
-    def get_dataset_files(self, dataset_id: str):
-        pass
